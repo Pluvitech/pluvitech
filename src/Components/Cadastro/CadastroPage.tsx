@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Flex,
-  Spacer,
   FormControl,
   Container,
   InputGroup,
@@ -22,13 +21,13 @@ import {
 } from "@chakra-ui/react";
 import { FormHelperText, Link } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
-import axios from "axios";
 import { api } from "../../lib/api";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 export default function CadastroPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [users, setUser] = useState("");
   const [email, setEmail] = useState("");
@@ -37,8 +36,8 @@ export default function CadastroPage() {
   const [pergunta, setPergunta] = useState("");
   const [resposta, setResposta] = useState("");
 
-  const [visible, setVisible] = React.useState(false);
-  const [visibleConfirme, setVisible2] = React.useState(false);
+  const [visible, setVisible] = useState(false);
+  const [visibleConfirme, setVisible2] = useState(false);
 
   const [userState, setUserState] = useState(0);
 
@@ -169,7 +168,7 @@ export default function CadastroPage() {
     if (response.status === 201) {
       limpar();
       setTimeout(() => {
-        navigate("/");
+        router.push("/");
       }, 3000);
     }
   };
@@ -459,7 +458,7 @@ export default function CadastroPage() {
             </Button>
             <FormHelperText textAlign={"center"}>
               Já tem conta ?{" "}
-              <Link as={ReactLink} to="/">
+              <Link as={NextLink} href="/">
                 Clique aqui
               </Link>{" "}
             </FormHelperText>

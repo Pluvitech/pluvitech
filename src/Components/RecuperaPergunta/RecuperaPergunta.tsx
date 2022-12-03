@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Flex,
-  Spacer,
   FormControl,
   Container,
   Select,
@@ -21,13 +20,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FormHelperText, Link } from "@chakra-ui/react";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { ChatIcon, EmailIcon } from "@chakra-ui/icons";
-import axios from "axios";
 import { api } from "../../lib/api";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 export default function RecuperaPerguntaPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [pergunta, setPergunta] = useState("");
   const [resposta, setResposta] = useState("");
@@ -100,7 +99,7 @@ export default function RecuperaPerguntaPage() {
       onOpen();
       if (response.status === 200) {
         setTimeout(() => {
-          navigate("/recupera-senha");
+          router.push("/recupera-senha");
         }, 3000);
       } else {
         console.log("Resposta Incorreta");
@@ -273,7 +272,7 @@ export default function RecuperaPerguntaPage() {
               Comparar Respostas
             </Button>
             <FormHelperText textAlign={"center"}>
-              <Link as={ReactLink} to="/">
+              <Link as={NextLink} href="/">
                 Voltar
               </Link>{" "}
             </FormHelperText>

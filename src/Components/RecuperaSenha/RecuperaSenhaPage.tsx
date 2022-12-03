@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Flex,
-  Spacer,
   FormControl,
   Container,
-  Select,
   FormErrorMessage,
   Button,
   FormLabel,
   Box,
-  Image,
   Heading,
   InputGroup,
   Input,
@@ -21,19 +18,19 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FormHelperText, Link } from "@chakra-ui/react";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import axios from "axios";
 import { api } from "../../lib/api";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 export default function RecuperaSenhaPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [pass, setPass] = useState("");
   const [doublePass, setDoublePass] = useState("");
 
-  const [visible, setVisible] = React.useState(false);
-  const [visibleConfirme, setVisible2] = React.useState(false);
+  const [visible, setVisible] = useState(false);
+  const [visibleConfirme, setVisible2] = useState(false);
 
   const [userState, setUserState] = useState(0);
 
@@ -92,7 +89,7 @@ export default function RecuperaSenhaPage() {
       onOpen();
       if (response.status === 200) {
         setTimeout(() => {
-          navigate("/");
+          router.push("/");
           localStorage.removeItem("Pluvitech-email");
         }, 3000);
       } else {
@@ -256,7 +253,7 @@ export default function RecuperaSenhaPage() {
               Recupere sua senha
             </Button>
             <FormHelperText textAlign={"center"}>
-              <Link as={ReactLink} to="/">
+              <Link as={NextLink} href="/">
                 Voltar
               </Link>{" "}
             </FormHelperText>
