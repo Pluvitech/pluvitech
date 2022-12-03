@@ -1,0 +1,39 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model usuario {
+  nome_usuario String
+  senha        String
+  resposta     String
+  email        String   @unique
+  idpergunta   Int
+  pergunta     pergunta @relation(fields: [idpergunta], references: [id])
+}
+
+model pergunta {
+  id       Int       @id
+  pergunta String
+  usuario  usuario[]
+}
+
+model dados {
+  id_dados   Int      @id @default(autoincrement())
+  quantidade Decimal  @db.Decimal(10, 2)
+  data       DateTime @default(now())
+}
+
+model tableConsumo {
+  id      Int     @id @default(autoincrement())
+  gastos  Decimal @default(0.0) @db.Decimal(10, 2)
+  consumo Decimal @default(0.0) @db.Decimal(10, 2)
+  mes     Int
+}
